@@ -15,7 +15,8 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["vite/client"]
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.*", "src/**/*.spec.*", "dist", "node_modules"]

@@ -22,18 +22,27 @@ function AnswerCard({ question, response, debugMode = false }: AnswerCardProps) 
   );
 
   const renderCitations = (citations: Citation[]) =>
-    citations.map((c) => (
-      <li key={c.chunk_id} className="citation">
-        <div className="citation__meta">
-          <span className="citation__book">{c.book}</span>
-          <span className="citation__chapter">Глава {c.chapter_index}</span>
-          <span className="citation__pos">Позиция {c.position}</span>
-        </div>
-        <div className="citation__quote">
-          <MarkdownViewer content={`> ${c.quote}`} />
-        </div>
-      </li>
-    ));
+    citations.map((c) => {
+      const hasChapterIndex = Number.isFinite(c.chapter_index);
+      const chapterLabel = hasChapterIndex
+        ? `Глава ${c.chapter_index}`
+        : c.chapter_title
+          ? `Глава: ${c.chapter_title}`
+          : "Глава не указана";
+
+      return (
+        <li key={c.chunk_id} className="citation">
+          <div className="citation__meta">
+            <span className="citation__book">{c.book}</span>
+            <span className="citation__chapter">{chapterLabel}</span>
+            <span className="citation__pos">Позиция {c.position}</span>
+          </div>
+          <div className="citation__quote">
+            <MarkdownViewer content={`> ${c.quote}`} />
+          </div>
+        </li>
+      );
+    });
 
   const renderContext = (chunks: ContextChunk[], scores: RawScore[]) => (
     <div className="context">
